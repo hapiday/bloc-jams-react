@@ -1,20 +1,69 @@
 import React, { Component } from 'react';
+import albumData from './../data/albums';
 
 class Album extends Component {
-  constructor(props) {
+  constructor(props){
    super(props);
  }
 
       const album = albumData.find( album => {
         return album.slug === this.props.match.params.slug
       });
-
       this.state = {
-        album: album
+      album: album,
+      currentSong: album.songs[0],
+      isPlaying: false
       };
+
+      this.audioElement = document.createElement('audio');
+      this.audioElement.src = album.songs[0].audioSrc;
     }
-  render() {
-    return (
+
+    play() {
+     this.audioElement.play();
+     this.setState({ isPlaying: true });
+  }
+
+    pause() {
+      this.audioElement.pause();
+      this.setState({ isPlaying: false });
+     }
+
+    setSong(song) {
+      this.audioElement.src = song.audioSrc;
+      this.setState({ currentSong: song });
+    }
+
+    handleSongClick(song) {
+      const isSameSong = this.state.currentSong === song;
+      if (this.state.isPlaying && isSameSong) {
+      this.pause();
+    } else {
+      if (!isSameSong) { this.setSong(song); }
+      this.play();
+    }
+    }
+    handleMouseEnter(song) {
+      this.setState({
+    hoveredSong:song
+  });
+}
+    handleMouseLeave(song){
+      this.setState({
+    hoveredSong:song
+  });
+}
+    selectIcon(song, index) {
+      if (!this.state.isPlaying && song === this.state.hoveredSong){
+        return <span className='ion-md-play'></span>
+      } else if (this.state.isPlaying && song === this.state.hoveredSong && song === this.state.currentSong) {
+        return <span className='ion-md-pause'></span>
+      } else {
+        return <span>{index+1}</span>
+    }
+    }
+    render() {
+      return (
       <section className="album">
       <section id="album-info">
        <img id="album-cover-art" src={this.state.album.albumCover} alt={this.state.album.title}/>
