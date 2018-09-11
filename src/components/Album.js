@@ -6,8 +6,8 @@ class Album extends Component {
   constructor(props){
    super(props);
 
-      const album = albumData.find( album => {
-        return album.slug === this.props.match.params.slug
+     const album = albumData.find( album => {
+     return album.slug === this.props.match.params.slug
       });
 
      this.state = {
@@ -18,8 +18,8 @@ class Album extends Component {
      isPlaying: false
     };
 
-      this.audioElement = document.createElement('audio');
-      this.audioElement.src = album.songs[0].audioSrc;
+     this.audioElement = document.createElement('audio');
+     this.audioElement.src = album.songs[0].audioSrc;
     }
 
     componentDidMount() {
@@ -126,6 +126,7 @@ class Album extends Component {
         return <span>{index+1}</span>
     }
     }
+
     render() {
       return (
       <section className="album">
@@ -145,7 +146,8 @@ class Album extends Component {
           </colgroup>
           <tbody>
           {
-            this.state.album.songs.map( (song, index) =>
+
+          this.state.album.songs.map( (song, index) =>
             <tr className="song" key={index} onClick={() => this.handleSongClick(song)}>
               <td onMouseEnter={ () => this.handleMouseEnter(song)} onMouseLeave={ () => this.handleMouseLeave(song)}>{this.selectIcon(song, index)}</td>
               <td>{song.title}</td>
@@ -171,5 +173,4 @@ class Album extends Component {
     );
   }
 }
-
 export default Album;
