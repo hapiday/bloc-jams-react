@@ -29,7 +29,7 @@ class PlayerBar extends Component {
            step="0.01"
            onChange={this.props.handleTimeChange}
          />
-         
+
          <div className="total-time">{this.props.formatTime(this.props.duration)}</div>
          <input
          type="range"
