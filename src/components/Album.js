@@ -173,4 +173,5 @@ class Album extends Component {
     );
   }
 }
+
 export default Album;
